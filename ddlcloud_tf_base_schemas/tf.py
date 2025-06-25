@@ -4,7 +4,10 @@ from typing import Union
 from pydantic import BaseModel, Field
 
 
-class BaseTFOutput(BaseModel):
+class ValidatingBaseModel(BaseModel, validate_assignment=True):
+    pass
+
+class BaseTFOutput(ValidatingBaseModel):
     def as_config(self, sensitive_fields: list[str] | None = None) -> dict:
         output = {k: {"value": v} for k, v in self.model_dump().items()}
 
@@ -21,19 +24,19 @@ class BaseTFOutput(BaseModel):
         return output
 
 
-class TFSet(BaseModel):
+class TFSet(ValidatingBaseModel):
     configs: dict
     module_id: str
     version: str
 
 
-class TFLocalBackend(BaseModel):
+class TFLocalBackend(ValidatingBaseModel):
     path: str
     workspace_dir: str | None = None
 
 
 # TODO: Work out all the vars/scenarios
-class TFS3Backend(BaseModel):
+class TFS3Backend(ValidatingBaseModel):
     bucket: str
     key: str
     region: str
@@ -41,12 +44,12 @@ class TFS3Backend(BaseModel):
     # use_lockfile: bool = True  # TODO: no workie
 
 
-class TFBackendConfig(BaseModel):
+class TFBackendConfig(ValidatingBaseModel):
     type_: str = Field(alias="type")
     config: Union[TFLocalBackend, TFS3Backend]
 
 
-class BaseTFConfig(BaseModel):
+class BaseTFConfig(ValidatingBaseModel):
     remote_module_refs: list[str] | None = None
     data: list | None = None
     depends_on: list[str] | None = None
