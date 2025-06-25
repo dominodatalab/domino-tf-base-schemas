@@ -1,10 +1,10 @@
 import json
 from typing import Union
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 
 
-class ValidatingBaseModel(BaseModel, validate_assignment=True):
+class ValidatingBaseModel(BaseModel, validate_assignment=True, strict=True):
     pass
 
 class BaseTFOutput(ValidatingBaseModel):
