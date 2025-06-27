@@ -7,6 +7,7 @@ from pydantic import BaseModel, Field, ConfigDict
 class ValidatingBaseModel(BaseModel, validate_assignment=True, strict=True):
     pass
 
+
 class BaseTFOutput(ValidatingBaseModel):
     def as_config(self, sensitive_fields: list[str] | None = None) -> dict:
         output = {k: {"value": v} for k, v in self.model_dump().items()}

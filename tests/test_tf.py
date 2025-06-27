@@ -1,6 +1,7 @@
 from unittest import TestCase
 
-import ddlcloud_tf_base_schemas 
+import ddlcloud_tf_base_schemas
+
 
 class TestCli(TestCase):
     def test_schemas(self):
