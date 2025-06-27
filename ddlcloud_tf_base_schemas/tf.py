@@ -57,7 +57,7 @@ class BaseTFConfig(ValidatingBaseModel):
     locals_: list | None = None
     backend: TFBackendConfig | None = None
 
-    def render_to_json(self) -> str:
+    def render_to_json(self) -> int:
         name = getattr(self, "name")
         struct: dict = {"//": f"ddlcloud: {{'module': '{name}'}}"}
 
