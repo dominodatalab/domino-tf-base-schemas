@@ -3,7 +3,7 @@ from unittest import TestCase
 
 from pydantic import Field
 
-import ddlcloud_tf_base_schemas
+import domino_tf_base_schemas
 
 tfset_results = {
     "first": {
@@ -54,17 +54,17 @@ output = {
 }
 
 
-class _TestModule(ddlcloud_tf_base_schemas.ValidatingBaseModel):
+class _TestModule(domino_tf_base_schemas.ValidatingBaseModel):
     source: str = "some-module-addr"
 
 
-class _TestTFOutput(ddlcloud_tf_base_schemas.BaseTFOutput):
+class _TestTFOutput(domino_tf_base_schemas.BaseTFOutput):
     some_output: str = "output"
     sensitive_output: str = "sensitive output"
     schema_sensitive_output: str = Field(json_schema_extra={"sensitive": True}, default="schema_sensitive")
 
 
-class _TestTFConfig(ddlcloud_tf_base_schemas.BaseTFConfig):
+class _TestTFConfig(domino_tf_base_schemas.BaseTFConfig):
     name: str = "test_tf_config"
     output: _TestTFOutput = _TestTFOutput()
     module: _TestModule = _TestModule()
@@ -75,12 +75,12 @@ class TestCli(TestCase):
     maxDiff = None
 
     def test_schemas(self):
-        tfset = ddlcloud_tf_base_schemas.TFSet(
+        tfset = domino_tf_base_schemas.TFSet(
             configs={
                 "first": _TestTFConfig(
-                    backend=ddlcloud_tf_base_schemas.TFBackendConfig(
+                    backend=domino_tf_base_schemas.TFBackendConfig(
                         type="s3",
-                        config=ddlcloud_tf_base_schemas.TFS3Backend(
+                        config=domino_tf_base_schemas.TFS3Backend(
                             bucket="some-bucket",
                             key="first",
                             region="some-region",
@@ -91,9 +91,9 @@ class TestCli(TestCase):
                     locals_=["some-locals"],
                 ),
                 "second": _TestTFConfig(
-                    backend=ddlcloud_tf_base_schemas.TFBackendConfig(
+                    backend=domino_tf_base_schemas.TFBackendConfig(
                         type="s3",
-                        config=ddlcloud_tf_base_schemas.TFLocalBackend(
+                        config=domino_tf_base_schemas.TFLocalBackend(
                             path="/tmp/terraform.tfstate",
                             workspace_dir="/tmp/",
                         ),

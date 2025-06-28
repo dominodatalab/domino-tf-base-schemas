@@ -30,14 +30,14 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: black
       run: |
-        black --check --diff ddlcloud_tf_base_schemas tests
+        black --check --diff domino_tf_base_schemas tests
     - name: ruff
       run: |
-        ruff check ddlcloud_tf_base_schemas tests
+        ruff check domino_tf_base_schemas tests
     - name: mypy
       run: |
-        mypy --follow-imports=silent ddlcloud_tf_base_schemas tests
+        mypy --follow-imports=silent domino_tf_base_schemas tests
     - name: Test with pytest
       run: |
-        coverage run --source ddlcloud_tf_base_schemas -m pytest -v tests
+        coverage run --source domino_tf_base_schemas -m pytest -v tests
         coverage report -m --fail-under=80
