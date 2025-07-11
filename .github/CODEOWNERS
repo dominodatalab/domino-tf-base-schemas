@@ -1,0 +1,4 @@
+# CODEOWNERS
+# https://help.github.com/en/github/creating-cloning-and-archiving-repositories/about-code-owners#codeowners-file-location
+
+* @dominodatalab/eng-distributions
