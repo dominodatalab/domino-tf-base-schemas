@@ -45,9 +45,24 @@ class TFS3Backend(ValidatingBaseModel):
     # use_lockfile: bool = True  # TODO: no workie
 
 
+class TFAzureRMBackend(ValidatingBaseModel):
+    resource_group_name: str
+    storage_account_name: str
+    container_name: str
+    key: str
+    access_key: str | None = None
+
+
+class TFGCSBackend(ValidatingBaseModel):
+    bucket: str
+    prefix: str | None = None
+    credentials: str | None = None
+    access_token: str | None = None
+
+
 class TFBackendConfig(ValidatingBaseModel):
     type_: str = Field(alias="type")
-    config: Union[TFLocalBackend, TFS3Backend]
+    config: Union[TFLocalBackend, TFS3Backend, TFAzureRMBackend, TFGCSBackend]
 
 
 class BaseTFConfig(ValidatingBaseModel):
